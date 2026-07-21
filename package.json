@@ -1,0 +1,55 @@
+{
+  "name": "ag-translation",
+  "version": "1.0.0",
+  "description": "AG Translation - 跨平台翻译工具",
+  "main": "src/main/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "electron:dev": "node scripts/dev.js",
+    "electron:build": "vite build && electron-builder",
+    "preview": "vite preview"
+  },
+  "keywords": ["translation", "translate", "agent", "ai"],
+  "author": "AG Translation",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.18.1",
+    "electron": "^43.1.1",
+    "electron-builder": "^26.15.3",
+    "element-plus": "^2.14.3",
+    "pinia": "^4.0.2",
+    "vue": "^3.5.40",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.8",
+    "@vue/compiler-sfc": "^3.5.40",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.5"
+  },
+  "build": {
+    "appId": "com.ag.translation",
+    "productName": "AG Translation",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "src/main/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

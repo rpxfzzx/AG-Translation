@@ -106,6 +106,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useAppStore } from '../stores/app'
 
 const store = useAppStore()
@@ -117,9 +118,8 @@ const {
   translationConfig,
   sourceLangs,
   targetLangs,
-  translate,
-  saveTranslationConfig,
-} = store
+} = storeToRefs(store)
+const { translate, saveTranslationConfig } = store
 
 const copied = ref(false)
 

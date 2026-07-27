@@ -34,11 +34,13 @@
 
 <script setup lang="ts">
 import { ElMessageBox } from 'element-plus'
+import { storeToRefs } from 'pinia'
 import { useAppStore } from '../stores/app'
 import { useRouter } from 'vue-router'
 import type { HistoryItem } from '../api/types'
 
 const store = useAppStore()
+const { history, inputText, outputText, translationConfig } = storeToRefs(store)
 const router = useRouter()
 
 const langLabels: Record<string, string> = {

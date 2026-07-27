@@ -21,10 +21,11 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useAppStore } from '../stores/app'
 
 const store = useAppStore()
-const { isOnline } = store
+const { isOnline } = storeToRefs(store)
 
 function minimize() {
   window.electronAPI?.minimize()

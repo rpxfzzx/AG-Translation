@@ -70,31 +70,6 @@ function initOfflineEngine() {
   console.log('[Offline] 离线翻译引擎初始化完成，内置词条:', Object.keys(dictionary).length);
 }
 
-// 简单分词（中文按字符，英文按空格）
-function tokenize(text, lang) {
-  if (lang === 'zh' || /[\u4e00-\u9fff]/.test(text)) {
-    // 中文：拆成单字 + 尝试匹配双字词
-    const tokens = [];
-    let i = 0;
-    while (i < text.length) {
-      // 尝试匹配双字词
-      if (i + 1 < text.length) {
-        const bigram = text.substring(i, i + 2);
-        if (dictionary[bigram] || i + 2 >= text.length) {
-          tokens.push(bigram);
-          i += 2;
-          continue;
-        }
-      }
-      tokens.push(text[i]);
-      i++;
-    }
-    return tokens;
-  }
-  // 英文按空格分词
-  return text.toLowerCase().split(/\s+/);
-}
-
 function translateOffline(text, sourceLang, targetLang) {
   if (!text || text.trim() === '') {
     return { text: '', success: false, reason: 'empty' };

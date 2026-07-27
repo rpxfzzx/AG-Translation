@@ -59,9 +59,6 @@ ipcMain.on('window:maximize', () => {
 });
 ipcMain.on('window:close', () => mainWindow?.close());
 
-// Network detection
-ipcMain.handle('network:isOnline', () => require('net').isIPv4);
-
 // Offline translation
 ipcMain.handle('translate:offline', async (_, text, sourceLang, targetLang) => {
   return translateOffline(text, sourceLang, targetLang);

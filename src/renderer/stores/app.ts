@@ -95,10 +95,13 @@ export const useAppStore = defineStore('app', () => {
     isTranslating.value = true
     outputText.value = ''
 
+    let resolvedMode = translationConfig.value.mode
     try {
-      determineMode()
+      if (resolvedMode === 'auto') {
+        resolvedMode = navigator.onLine ? 'online' : 'offline'
+      }
 
-      if (translationConfig.value.mode === 'offline') {
+      if (resolvedMode === 'offline') {
         // 离线翻译
         if (window.electronAPI) {
           const result = await window.electronAPI.translateOffline(
@@ -125,13 +128,13 @@ export const useAppStore = defineStore('app', () => {
       }
 
       // 添加到历史记录
-      addHistory(inputText.value, outputText.value)
+      addHistory(inputText.value, outputText.value, resolvedMode)
 
     } catch (err: any) {
       outputText.value = `翻译失败: ${err.message || '未知错误'}`
 
       // 如果在线模式失败且开启了 auto 模式，尝试离线
-      if (translationConfig.value.mode === 'online' && window.electronAPI) {
+      if (resolvedMode === 'online' && window.electronAPI) {
         try {
           const fallback = await window.electronAPI.translateOffline(
             inputText.value,
@@ -140,6 +143,7 @@ export const useAppStore = defineStore('app', () => {
           )
           if (fallback.success) {
             outputText.value = `[离线模式] ${fallback.text}`
+            resolvedMode = 'offline'
           }
         } catch {}
       }
@@ -148,25 +152,14 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
-  function determineMode() {
-    if (translationConfig.value.mode === 'auto') {
-      const online = navigator.onLine
-      translationConfig.value.mode = online ? 'online' : 'offline'
-      // 恢复
-      setTimeout(() => {
-        translationConfig.value.mode = 'auto'
-      }, 100)
-    }
-  }
-
-  function addHistory(source: string, target: string) {
+  function addHistory(source: string, target: string, mode: string) {
     const item: HistoryItem = {
       id: Date.now().toString(),
       sourceText: source,
       targetText: target,
       sourceLang: translationConfig.value.sourceLang,
       targetLang: translationConfig.value.targetLang,
-      mode: translationConfig.value.mode,
+      mode: mode,
       timestamp: Date.now(),
     }
     history.value.unshift(item)

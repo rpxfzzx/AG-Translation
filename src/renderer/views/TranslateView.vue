@@ -60,7 +60,7 @@
       <div class="input-actions">
         <span class="char-count">{{ inputText.length }} 字符</span>
         <div class="action-right">
-          <el-button size="small" @click="pasteFromClipboard" :disabled="!isOnline">
+          <el-button size="small" @click="pasteFromClipboard">
             粘贴
           </el-button>
           <el-button size="small" @click="clearInput" v-if="inputText">

@@ -1,5 +1,7 @@
 # AG Translation
 
+> **最新发布：v1.0.0** — [下载安装包](https://github.com/rpxfzzx/AG-Translation/releases/tag/v1.0.0)
+
 基于 Electron + Vue 3 的跨平台翻译桌面应用，支持在线 AI 翻译和离线词典翻译。
 
 ## 功能
@@ -96,6 +98,16 @@ AG Translation/
 2. 将 `dist/` 作为鸿蒙 WebView 资源加载
 3. 鸿蒙原生通过 JS Bridge 注入 `window.harmonyAPI`（接口定义见 `src/renderer/platform/harmony.ts`）
 4. 应用自动检测 `window.__harmony__` 标志，切换为鸿蒙 API 调用
+
+## 下载
+
+Windows 用户可直接下载安装包：
+
+[⬇️ 下载 AG Translation v1.0.0 (108 MB)](https://github.com/rpxfzzx/AG-Translation/releases/download/v1.0.0/AG-Translation-Setup-1.0.0.exe)
+
+- 支持静默安装 `/S` 参数
+- 支持自定义安装目录（非 one-click 模式）
+- 安装后自动创建桌面快捷方式
 
 ## License
 
